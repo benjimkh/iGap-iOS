@@ -7,11 +7,11 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>780057141561-146st1ivm8chlusabplfmk5vlgqu4p3i.apps.googleusercontent.com</string>
+	<string>780057141561-b6um8v7tr94h1jhul0vqnd2ptr1cte80.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.780057141561-146st1ivm8chlusabplfmk5vlgqu4p3i</string>
+	<string>com.googleusercontent.apps.780057141561-b6um8v7tr94h1jhul0vqnd2ptr1cte80</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDHprxt5WLJAmBLg-OQJ5HSUGzB3FAvILs</string>
+	<string>AIzaSyBb8fPYv8cyCV9JcBUU_vltFQCdoCEfrHs</string>
 	<key>GCM_SENDER_ID</key>
 	<string>780057141561</string>
 	<key>PLIST_VERSION</key>
@@ -23,15 +23,15 @@
 	<key>STORAGE_BUCKET</key>
 	<string>igap-im.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:780057141561:ios:24a11d6344d14421</string>
 	<key>DATABASE_URL</key>
