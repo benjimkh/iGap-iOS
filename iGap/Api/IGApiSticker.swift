@@ -16,7 +16,7 @@ public class IGApiSticker {
     static let shared = IGApiSticker()
     
     private let url = "https://sticker.igap.net/stickers/favorite"
-    
+    let headers: HTTPHeaders = ["Authorization": "Bearer aJxCwvu+v2qz5A8a7WZ8rfYCgGoG/XLGN5tni8FT5XYaHSrMo0XQtrcrDPBszWKB8NUmrcHlmVtqe3S4kRQcow=="]
     
     public func callStickerApi() {
         Alamofire.request(url, headers: headers).responseStickerApi { response in
