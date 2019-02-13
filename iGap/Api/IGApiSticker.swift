@@ -10,19 +10,44 @@
 
 import Foundation
 import Alamofire
+import SwiftyJSON
 
 public class IGApiSticker {
     
     static let shared = IGApiSticker()
     
-    private let url = "https://sticker.igap.net/stickers"
+    private let urlStickerList = "https://sticker.igap.net/stickers"
+    private let urlMySticker = "https://sticker.igap.net/stickers"
     let headers: HTTPHeaders = ["Authorization": "Bearer aJxCwvu+v2qz5A8a7WZ8rfYCgGoG/XLGN5tni8FT5XYaHSrMo0XQtrcrDPBszWKB8NUmrcHlmVtqe3S4kRQcow=="]
     
-    public func callStickerApi() {
-        Alamofire.request(url, headers: headers).responseStickerApi { response in
+    func stickerList(offset: Int, limit: Int, completion: @escaping ((_ stickers :[StickerTab]) -> Void)) {
+        let parameters: Parameters = ["skip" : offset, "limit" : limit]
+        Alamofire.request(urlStickerList, parameters: parameters, headers: headers).responseStickerApi { response in
             if let stickerApi = response.result.value {
-                IGFactory.shared.setSticker(stickers: stickerApi.data)
+                completion(stickerApi.data)
             }
+        }
+    }
+    
+    func mySticker(){
+        Alamofire.request(urlMySticker, headers: headers).responseStickerApi { response in
+            if let stickerApi = response.result.value {
+                IGFactory.shared.addSticker(stickers: stickerApi.data)
+            }
+        }
+    }
+    
+    func addSticker(groupId: String, completion: @escaping ((_ success :Bool) -> Void)) {
+        let urlSticker = urlMySticker + "/" + groupId + "/favorite"
+        Alamofire.request(urlSticker, method: .post, headers: headers).responseJSON { response in
+            completion(response.result.isSuccess)
+        }
+    }
+    
+    func removeSticker(groupId: String, completion: @escaping ((_ success :Bool) -> Void)) {
+        let urlSticker = urlMySticker + "/" + groupId + "/favorite"
+        Alamofire.request(urlSticker, method: .delete, headers: headers).responseJSON { response in
+            completion(response.result.isSuccess)
         }
     }
     
