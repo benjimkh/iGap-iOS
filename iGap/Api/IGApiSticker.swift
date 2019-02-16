@@ -35,6 +35,15 @@ public class IGApiSticker {
         }
     }
     
+    func stickerGroup(groupId: String, completion: @escaping ((_ stickers :[StickerTab]) -> Void)) {
+        let parameters: Parameters = ["groupId" : groupId]
+        Alamofire.request(urlStickerList, parameters: parameters, headers: getHeaders()).responseStickerApi { response in
+            if let stickerApi = response.result.value {
+                completion(stickerApi.data)
+            }
+        }
+    }
+    
     func mySticker(){
         Alamofire.request(urlMySticker, headers: getHeaders()).responseStickerApi { response in
             if let stickerApi = response.result.value {
