@@ -21,7 +21,7 @@ public class IGApiSticker {
     private func getHeaders() -> HTTPHeaders {
         let path = Bundle.main.path(forResource: "stickerPublicKey", ofType: "txt")
         let publicKey : String = try! NSString(contentsOfFile: path!, encoding: String.Encoding.utf8.rawValue) as String
-        let authorization = "Bearer " + String(describing: IGAppManager.sharedManager.userID()).aesEncrypt(publicKey: publicKey)
+        let authorization = "Bearer " + String(describing: IGAppManager.sharedManager.userID()!).aesEncrypt(publicKey: publicKey)
         let headers: HTTPHeaders = ["Authorization": authorization]
         return headers
     }
