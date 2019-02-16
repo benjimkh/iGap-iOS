@@ -15,14 +15,20 @@ import SwiftyJSON
 public class IGApiSticker {
     
     static let shared = IGApiSticker()
-    
     private let urlStickerList = "https://sticker.igap.net/stickers"
     private let urlMySticker = "https://sticker.igap.net/stickers"
-    let headers: HTTPHeaders = ["Authorization": "Bearer aJxCwvu+v2qz5A8a7WZ8rfYCgGoG/XLGN5tni8FT5XYaHSrMo0XQtrcrDPBszWKB8NUmrcHlmVtqe3S4kRQcow=="]
+    
+    private func getHeaders() -> HTTPHeaders {
+        let path = Bundle.main.path(forResource: "stickerPublicKey", ofType: "txt")
+        let publicKey : String = try! NSString(contentsOfFile: path!, encoding: String.Encoding.utf8.rawValue) as String
+        let authorization = "Bearer " + String(describing: IGAppManager.sharedManager.userID()).aesEncrypt(publicKey: publicKey)
+        let headers: HTTPHeaders = ["Authorization": authorization]
+        return headers
+    }
     
     func stickerList(offset: Int, limit: Int, completion: @escaping ((_ stickers :[StickerTab]) -> Void)) {
         let parameters: Parameters = ["skip" : offset, "limit" : limit]
-        Alamofire.request(urlStickerList, parameters: parameters, headers: headers).responseStickerApi { response in
+        Alamofire.request(urlStickerList, parameters: parameters, headers: getHeaders()).responseStickerApi { response in
             if let stickerApi = response.result.value {
                 completion(stickerApi.data)
             }
@@ -30,7 +36,7 @@ public class IGApiSticker {
     }
     
     func mySticker(){
-        Alamofire.request(urlMySticker, headers: headers).responseStickerApi { response in
+        Alamofire.request(urlMySticker, headers: getHeaders()).responseStickerApi { response in
             if let stickerApi = response.result.value {
                 IGFactory.shared.addSticker(stickers: stickerApi.data)
             }
@@ -39,14 +45,14 @@ public class IGApiSticker {
     
     func addSticker(groupId: String, completion: @escaping ((_ success :Bool) -> Void)) {
         let urlSticker = urlMySticker + "/" + groupId + "/favorite"
-        Alamofire.request(urlSticker, method: .post, headers: headers).responseJSON { response in
+        Alamofire.request(urlSticker, method: .post, headers: getHeaders()).responseJSON { response in
             completion(response.result.isSuccess)
         }
     }
     
     func removeSticker(groupId: String, completion: @escaping ((_ success :Bool) -> Void)) {
         let urlSticker = urlMySticker + "/" + groupId + "/favorite"
-        Alamofire.request(urlSticker, method: .delete, headers: headers).responseJSON { response in
+        Alamofire.request(urlSticker, method: .delete, headers: getHeaders()).responseJSON { response in
             completion(response.result.isSuccess)
         }
     }
