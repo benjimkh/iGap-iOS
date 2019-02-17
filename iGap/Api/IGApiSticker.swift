@@ -36,10 +36,10 @@ public class IGApiSticker {
     }
     
     func stickerGroup(groupId: String, completion: @escaping ((_ stickers :[StickerTab]) -> Void)) {
-        let parameters: Parameters = ["groupId" : groupId]
-        Alamofire.request(urlStickerList, parameters: parameters, headers: getHeaders()).responseStickerApi { response in
+        let url: String! = urlMySticker + "/" + groupId
+        Alamofire.request(url!, headers: getHeaders()).responseStickerGroup { response in
             if let stickerApi = response.result.value {
-                completion(stickerApi.data)
+                completion([stickerApi.data])
             }
         }
     }
@@ -103,6 +103,11 @@ extension DataRequest {
     
     @discardableResult
     func responseStickerApi(queue: DispatchQueue? = nil, completionHandler: @escaping (DataResponse<StickerApi>) -> Void) -> Self {
+        return responseDecodable(queue: queue, completionHandler: completionHandler)
+    }
+    
+    @discardableResult
+    func responseStickerGroup(queue: DispatchQueue? = nil, completionHandler: @escaping (DataResponse<StickerGroup>) -> Void) -> Self {
         return responseDecodable(queue: queue, completionHandler: completionHandler)
     }
 }
